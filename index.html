@@ -926,6 +926,67 @@
       }
     }
 
+    @media (max-width: 767px) {
+      body.menu-open {
+        overflow: hidden;
+      }
+
+      .site-header {
+        z-index: 1000;
+      }
+
+      .nav-toggle {
+        position: relative;
+        z-index: 1200;
+      }
+
+      .nav-toggle.is-open {
+        position: fixed;
+        top: 16px;
+        right: 18px;
+        transform: none;
+        background: rgba(255, 253, 249, .96);
+        box-shadow: 0 10px 24px rgba(93, 77, 58, .12);
+      }
+
+      .site-nav {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        border: 0;
+        border-radius: 0;
+        background:
+          radial-gradient(circle at 18% 12%, rgba(244, 231, 198, .48), transparent 18rem),
+          linear-gradient(180deg, #fffdf9 0%, #fffaf2 100%);
+        box-shadow: none;
+        padding: 92px 24px 40px;
+        transform: translateY(-8px);
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1100;
+      }
+
+      .site-nav.is-open {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .site-nav a {
+        width: min(88vw, 320px);
+        min-height: 48px;
+        justify-content: center;
+        padding: 13px 18px;
+        text-align: center;
+      }
+    }
+
     @media (max-width: 640px) {
       :root {
         --header-height: 68px;
@@ -1351,6 +1412,7 @@
     toggle.addEventListener('click', () => {
       const isOpen = toggle.classList.toggle('is-open');
       nav.classList.toggle('is-open', isOpen);
+      document.body.classList.toggle('menu-open', isOpen);
       toggle.setAttribute('aria-expanded', String(isOpen));
       toggle.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く');
     });
@@ -1359,6 +1421,7 @@
       link.addEventListener('click', () => {
         toggle.classList.remove('is-open');
         nav.classList.remove('is-open');
+        document.body.classList.remove('menu-open');
         toggle.setAttribute('aria-expanded', 'false');
         toggle.setAttribute('aria-label', 'メニューを開く');
       });
